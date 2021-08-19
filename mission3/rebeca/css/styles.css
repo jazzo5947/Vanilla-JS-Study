@@ -1,0 +1,10 @@
+.search-result-img{
+    width: 200px;
+    height: 200px;
+}
+
+.history {
+    cursor: pointer;
+    text-decoration: underline;
+    color: green;
+}

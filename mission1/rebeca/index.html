@@ -1,0 +1,171 @@
+<html>
+
+<head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+</head>
+<style>
+.list-title{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.completed{
+    color: gray
+}
+
+li {
+    list-style: none;
+}
+</style>
+<body>
+    <section>
+        <h1 class="list-title">[JS-List]</h1>
+        <ul id="js-list"></ul>
+    </section>
+    <section>
+        <h1 class="list-title">[Travel-List]</h1>
+        <ul id="travel-list"></ul>
+    </section>
+    <section>
+        <h1 class="list-title">[Study-List]</h1>
+        <ul id="study-list"></ul>
+    </section>
+
+    <script>
+        const data = [
+            {
+                text: 'JS 공부하기',
+                isCompleted: true
+            },
+            {
+                text: 'JS 복습하기',
+                isCompleted: true
+            }
+        ]
+
+        const travel = [
+            {
+                text: '수영장',
+                isCompleted: true
+            }, {
+                text: '거제도 다이빙',
+                isCompleted: false
+            }
+        ]
+
+        const study = [
+            {
+                text: '코딩 스터디',
+                isCompleted: true
+            }, {
+                text: '모각코 1주차',
+                isCompleted: true
+            }
+        ]
+
+        const data2 = [
+            {
+                text: 'JS 2주차 스터디 모임',
+                isCompleted: true
+            },
+            {
+                text: 'JS 2주차 스터디 미션',
+                isCompleted: false
+            }
+        ]
+
+        const travel2 = [
+            {
+                text: '호캉스',
+                isCompleted: true
+            }, {
+                text: '삼척 스노쿨링',
+                isCompleted: false
+            }, {
+                text: '미트컬쳐 어게인',
+                isCompleted: false
+            }
+        ]
+
+        const study2 = [
+            {
+                text: '모각코 2주차',
+                isCompleted: false
+            }, {
+                text: '코어 자바스크립트 1회독',
+                isCompleted: false
+            }
+        ]
+        
+        function isValidateData(todos){
+            if (!Array.isArray(todos) || !todos) {
+                throw new Error ('Not correct parameter! ...Caused by: '+todos)
+            }
+            // const result = todos.map(todo => {
+            //     let textValidation = typeof todo.text === 'string' ? true : false
+            //     let completeValidation = typeof todo.isCompleted === 'boolean' ? true : false
+            //     if(!(textValidation && completeValidation)){
+            //         throw new Error('Data Type Error! ...Caused by: '+todo)
+            //     }
+            // })
+            const result2 = todos.every(todo =>{
+                return typeof todo.text === 'string' && typeof todo.isCompleted === 'boolean'
+            })
+        }
+        
+        function isValidateElement(elementId){
+            if(!document.getElementById(elementId)){
+                throw new Error('Element Not Exist! ...Caused by: '+elementId)
+            }
+        }
+
+        class TodoList {
+            constructor(todos, elementId) {
+                if(!(this instanceof TodoList)){
+                    throw new Error('Not Instance of TodoList! ...check new keyword')
+                }
+                isValidateData(todos)
+                isValidateElement(elementId)
+
+                this.todos = todos
+                this.elementId = elementId
+            }
+
+            render() {
+                let listElement = ''
+                const rendered = this.todos.map(todo => {
+                    listElement += todo.isCompleted ? `<li class="completed"><s>${todo.text}</s></li>` : `<li>${todo.text}</li>`
+                })
+                document.getElementById(this.elementId).innerHTML = listElement
+                // this.todos.forEach(function (todo) {
+                //     listElement += todo.isCompleted ? `<li><s>${todo.text}</s></li>` : `<li>${todo.text}</li>`
+                // })
+                // document.querySelector(this.elementId).innerHTML = listElement
+            }
+
+            setState(nextData) {
+                this.todos = nextData
+                this.render()
+            }
+        }
+
+        try{
+            const js = new TodoList(data, 'js-list')
+            const trip = new TodoList(travel, 'travel-list')
+            const schedule = new TodoList(study, 'study-list')
+            js.render()
+            trip.render()
+            schedule.render()
+
+            js.setState(data2)
+            trip.setState(travel2)
+            schedule.setState(study2)
+        }catch(e){
+            console.error(e)    
+        }        
+        
+    </script>
+</body>
+
+</html>

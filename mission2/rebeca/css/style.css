@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;600;900&display=swap');
+
+body {
+    font-family: 'Noto Serif KR', serif;
+}
+
+div{
+    margin-bottom: 10px;
+}
+
+ul{
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+span{
+    margin-right: 5px;;
+}
+
+.list-title{
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px;
+}
+
+.completed{
+    color: gray;
+    text-decoration:line-through;
+}
+
+.remove{
+    color: black
+}
+
+.add-button{
+    width: 30px;
+    height: 30px;
+}
+
+.none-button {
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+}
+
+.item-input{
+    height: 30px;
+    margin-right: 10px;
+}
+
+.todo-input-div{
+    display: flex;
+    align-items: center;
+}
