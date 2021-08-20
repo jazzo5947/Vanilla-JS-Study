@@ -14,7 +14,7 @@ class TodoInput {
 
     checkInputEmpty(value) {
         if (!value) {
-            alert('Enter todo text!')
+            //alert('Enter todo text!')
             return false
         }
         return true
@@ -26,9 +26,9 @@ class TodoInput {
 
         input.addEventListener('keyup', e => {
             if (e.key === "Enter") {
-                const check = this.checkInputEmpty(input.value)
+                const check = this.checkInputEmpty(e.target.value)
                 if (!check) return
-                this.#addTodoItem(input.value)
+                this.#addTodoItem(e.target.value)
                 input.value = ""
             }
         })

@@ -1,0 +1,123 @@
+<html>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport'
+        content='width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'>
+  <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+  <title>Document</title>
+</head>
+<body>
+
+
+<script>
+
+  // 프라미스 + 비동기 + 오류처리 예시
+
+  const URL = 'https://jjalbot.com/api/jjals?text=냥펀치'
+
+  /**
+   * Request-1 :  고인물 프라미스 방식
+   * @param url
+   * @returns {Promise<unknown>}
+   */
+  const promiseLoad = (url) => {
+    return new Promise(function (resolve, reject) {
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', url, true);
+      xhr.onreadystatechange = function () {
+        if (xhr.status >= 400 && xhr.status <= 500) reject(xhr.status.toString())
+        if (xhr.readyState === 4 && xhr.status === 200) resolve(xhr.response);
+      };
+
+      xhr.send(null);
+
+    })
+  }
+
+  /**
+   * Request-2 :  신식? 프라미스 방식 (aka. fetch)
+   * @param url
+   * @returns {Promise<Response>}
+   */
+  const asyncLoad = (url) => {
+    return fetch(url)
+      .then(res => {
+        if (!res.ok) {
+          // callee 에서 에러 던지기
+          throw new Error(res.status.toString())
+        }
+        return res.json()
+      })
+      .catch(e => {
+        // 만약 asyncLoad를 부르는 함수(getDataAsync)에서 오류처리를 한다면 catch는 생략할 수 있다
+        // 하지만 첫번째 then에서 다른 오류가 발생할 경우도 있으니 던진다 오류를...
+        throw e
+      })
+
+  }
+
+
+  /**
+   * Get-1 : 프라미스 then 으로 비동기 처리
+   * 프라미스 체이닝 (then... then...) 으로 동기식 처리가 가능
+   */
+  const getDataPromise = () => {
+    promiseLoad(URL)
+      .then(res => {
+        console.log('getDataPromise result', res);
+        return JSON.parse(res)
+      })
+      .catch(e => {
+        handleError(e)
+      })
+  }
+
+  /**
+   * Get-2 : async await
+   * @returns {Promise<void>}
+   */
+  const getDataAsync = async () => {
+    try {
+      const result = await asyncLoad(URL)
+      console.log('result', result);
+    } catch (e) {
+      console.log('caller 에서 에러처리', e);
+      handleError(e)
+    }
+
+    // fetch도 promise를 리턴하므로 then으로 연결이 가능하다 - 따라서 아래 코드는 위의 코드와 동일함
+    /* const result = await asyncLoad(URL).then(res => {
+      console.log(res);
+    }).catch(e => {
+      handleError(e)
+    }) */
+  }
+
+  getDataAsync()
+  getDataPromise()
+
+  /**
+   * 오류 처리를 위한 공통유틸
+   * @param errorStatus
+   */
+  const handleError = (errorStatus) => {
+    switch (errorStatus) {
+      case '400':
+        console.error('잘못된 요청이...')
+        break
+      case '404':
+        console.error('없는 데이터 or 페이지..')
+        break
+      case '500':
+        console.error('서버에러')
+        break
+      default:
+        console.error('오류발생', `${errorStatus}`)
+        break
+    }
+  }
+
+</script>
+
+</body>
+</html> 
