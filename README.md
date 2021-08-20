@@ -1,4 +1,4 @@
-# Vanilla-JS-Study
+# Vanilla Javascript Study
 
 > Vanilla JS Study Managed by David [@dkim-planit](https://github.com/dkim-planit)
  - Coding a Todo List as a module system
