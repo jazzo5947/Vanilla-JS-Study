@@ -39,5 +39,6 @@
 * TodoList와 마찬가지로 App 컴포넌트에서 하위 컴포넌트를 관리하도록 구조화합니다.
 * 짤방 이미지를 `fetch`해오는 코드를 `promise` → `async, await` 코드로 변경합니다.
 * `debounce` 기법을 활용하여 불필요한 api 요청이 가는 것을 방지합니다.
+* 사용성을 고려하여 compositionend 이벤트를 캐치해 api를 호출합니다.
 
 <img src="https://user-images.githubusercontent.com/66122957/130168502-37da6860-efd3-44e8-a950-cec85450aaa7.gif">
